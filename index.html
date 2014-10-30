@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="js/jquery.js"></script>
+        <script src="js/bestbuy.js"></script>
+        <script>
+            function log(msg) {
+                console.log(msg);
+            }
+
+
+            function handleTrendingProducts(result) {
+                log("trending products:");
+                log(result);
+            }
+
+
+            $(function() {
+                log("ready");
+                var products = trendingProducts(handleTrendingProducts);
+            });
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
