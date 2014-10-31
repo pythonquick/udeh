@@ -39,12 +39,6 @@ function nodeClick(sku) {
 }
 
 
-function showProductDetails(sku) {
-    log("showProductDetails");
-    //log
-}
-
-
 function log(msg) {
     console.log(msg);
 }
@@ -78,7 +72,7 @@ function handleTrendingProducts(data) {
     displayProductDetails(skus[0]);
 }
 
-function onModalClick(sku){
+function showProductDetails(sku){
     detailsForProduct(sku, function(data) {
         reviewsForProduct(sku, function(data2) {
             $("#productTitle").text(data.products[0].name);
