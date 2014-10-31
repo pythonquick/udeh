@@ -22,10 +22,18 @@
             }
 
 
+            function logApiResponse(data) {
+                log("API return:");
+                log(data);
+            }
+
+
             $(function() {
                 log("ready");
                 //var products = trendingProducts(handleTrendingProducts);
-                accessoriesForProduct("6848136", handleAccessories);
+                //accessoriesForProduct("6848136", handleAccessories);
+                //detailsForProduct("6848136", logApiResponse);
+                searchFor("cam", logApiResponse);
 
             });
         </script>

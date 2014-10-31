@@ -21,6 +21,27 @@
     }
 
 
+    function detailsForProduct(sku, callback) {
+        //http://api.remix.bestbuy.com/v1/products(sku=6848136)?show=name,description,shortDescription,longDescription,height,width,depth,weight&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
+
+        var baseUrl = "http://api.remix.bestbuy.com/v1/products(sku=" + sku + ")";
+        var params = {
+            show: "name,description,shortDescription,longDescription,height,width,depth,weight"
+        };
+        bestBuyApi(baseUrl, params, callback);
+    }
+
+
+    function searchFor(searchString, callback) {
+        //http://api.remix.bestbuy.com/v1/products(description=camera*)?show=name,description,shortDescription,longDescription,height,width,depth,weight&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
+        var baseUrl = "http://api.remix.bestbuy.com/v1/products(description=" + searchString + "*)";
+        var params = {
+            show: "name,description,shortDescription,longDescription,height,width,depth,weight"
+        };
+        bestBuyApi(baseUrl, params, callback);
+    }
+
+
     function accessoriesForProduct(sku, callback) {
 //http://api.remix.bestbuy.com/v1/products(sku=1752378)?show=sku,name,includedItemList.includedItem,accessories.sku,relatedProducts.sku&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
 
