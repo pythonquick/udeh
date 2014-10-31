@@ -23,7 +23,8 @@
 
 
             function handleProductDetails(data) {
-                
+                log("Product Details response:");
+                log(data);
                 var product = data.products[0];
                 log("Product Details:");
                 //log("product.
@@ -70,8 +71,8 @@
                 log("ready");
                 //var products = trendingProducts(handleTrendingProducts);
                 //accessoriesForProduct("6848136", handleAccessories);
-                //detailsForProduct("6848136", logApiResponse);
-                searchFor("cam", handleSearchResults);
+                detailsForProduct("6848136", handleProductDetails);
+                //searchFor("cam", handleSearchResults);
 
                 //reviewsForProduct("6848136", handleReviews);
 
