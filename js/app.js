@@ -78,15 +78,17 @@ function showProductDetails(sku){
     detailsForProduct(sku, function(data) {
         reviewsForProduct(sku, function(data2) {
             $("#productTitle").text(data.products[0].name);
-            $("#productDescription").text(data.products[0].description);
+            var longDescription = data.products[0].longDescription;
+            $("#productDescription").text(data.products[0].description || longDescription);
             $("#modalImage").attr("src", data.products[0].image);
             $("#reviews").html("");
             var outer, header, body;
-            for(var i; i<data2.reviews.length; i++){
+            for(var i=0; i<data2.reviews.length; i++){
+                var review = data2.reviews[i];
                 outer = $('#reviews').append("<div/>")
                 outer.addClass("panel").addClass("panel-default");
-                header = outer.append("<div/>").append("<h5/>").text(review[i].title);
-                body = outer.append("<div/>").text(review[i].comment);
+                header = outer.append("<div/>").append("<h5/>").text(review.title);
+                body = outer.append("<div/>").text(review.comment);
             }
 
             $('#productModal').modal("show");
