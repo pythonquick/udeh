@@ -21,6 +21,18 @@
     }
 
 
+    function accessoriesForProduct(sku, callback) {
+//http://api.remix.bestbuy.com/v1/products(sku=1752378)?show=sku,name,includedItemList.includedItem,accessories.sku,relatedProducts.sku&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
+
+        var baseUrl = "http://api.remix.bestbuy.com/v1/products(sku=" + sku + ")";
+        var params = {
+            show: "sku,name,includedItemList.includedItem,accessories.sku,relatedProducts.sku"
+        };
+        bestBuyApi(baseUrl, params, callback);
+
+    }
+
+
 //    return {
 //        trendingProducts: trendingProducts
 //    };

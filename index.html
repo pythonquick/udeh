@@ -8,15 +8,25 @@
             }
 
 
-            function handleTrendingProducts(result) {
+            function handleTrendingProducts(data) {
                 log("trending products:");
-                log(result);
+                log(data);
+                //var productList = data.results;
+
+            }
+
+
+            function handleAccessories(data) {
+                log("accessories:");
+                log(data);
             }
 
 
             $(function() {
                 log("ready");
-                var products = trendingProducts(handleTrendingProducts);
+                //var products = trendingProducts(handleTrendingProducts);
+                accessoriesForProduct("6848136", handleAccessories);
+
             });
         </script>
     </head>
