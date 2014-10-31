@@ -41,6 +41,25 @@ function handleTrendingProducts(data) {
     });
 }
 
+function onModalClick(sku){
+    detailsForProduct(sku, function(data) {
+        reviewsForProduct(sku, function(data2) {
+            $("#productTitle").text(data.products[0].name);
+            $("#productDescription").text(data.products[0].description);
+            $("#modalImage").attr("src", data.products[0].image);
+            $("#reviews").html("");
+            var outer, header, body;
+            for(var i; i<data2.reviews.length; i++){
+                outer = $('#reviews').append("<div/>")
+                outer.addClass("panel").addClass("panel-default");
+                header = outer.append("<div/>").append("<h5/>").text(review[i].title);
+                body = outer.append("<div/>").text(review[i].comment);
+            }
+
+            $('#productModal').modal("show");
+        });
+    });
+}
 
 function handleAccessories(data) {
     log("accessories:");
