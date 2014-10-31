@@ -1,18 +1,52 @@
+var D3 = initD3("#d3canvas", nodeClick);
+
+
+function nodeClick() {
+    alert("node click");
+}
+
+
 function log(msg) {
     console.log(msg);
 }
 
+function loadTrendingProducts() {
+    trendingProducts(handleTrendingProducts);
+}
+
 
 function handleTrendingProducts(data) {
-    log("trending products:");
-    log(data);
     //var productList = data.results;
-
+    var results = data.results;
+    var skus = [];
+    for (var idx=0; idx<results.length; idx++) {
+        var product = results[idx];
+        skus.push(product.sku);
+    }
+    detailsForProducts(skus, function(data) {
+        log("product details:");
+        log(data);
+        var products = data.products;
+        for (var idx=0; idx<products.length; idx++) {
+            var product = products[idx];
+            var sku = product.sku;
+            var imageUrl = product.image;
+            var radius = 50;
+            log("sku: " + sku + " image: " + imageUrl);
+            D3.addnode(sku, radius, imageUrl);
+        }
+    });
 }
 
 
 function handleAccessories(data) {
     log("accessories:");
+    log(data);
+}
+
+
+function handleTrending(data) {
+    log("Trending data:");
     log(data);
 }
 

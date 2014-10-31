@@ -6,8 +6,8 @@
 //   clear() // reset the entire graph
 function initD3(selector, onclick) {
 	var j = $(selector),
-		width = window.screen.width,
-		height = window.screen.height;
+		width = j.width(),
+		height = j.height();
 
 	var fill = d3.scale.category20();
 	var force = d3.layout.force()

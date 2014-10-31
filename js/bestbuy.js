@@ -32,6 +32,15 @@
     }
 
 
+    function detailsForProducts(skus, callback) {
+        var baseUrl = "http://api.remix.bestbuy.com/v1/products(sku in(" + skus.join(",") + "))";
+        var params = {
+            show: "sku,name,description,image,addToCartUrl,salePrice"
+        };
+        bestBuyApi(baseUrl, params, callback);
+    }
+
+
     function searchFor(searchString, callback) {
         //http://api.remix.bestbuy.com/v1/products(description=camera*)?show=name,description,shortDescription,longDescription,height,width,depth,weight&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
         var baseUrl = "http://api.remix.bestbuy.com/v1/products(description=" + searchString + "*)";
@@ -61,6 +70,7 @@
         };
         bestBuyApi(baseUrl, params, callback);
     }
+
 
 
 //    return {
