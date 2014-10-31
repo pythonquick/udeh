@@ -7,10 +7,6 @@ D3 = initD3("#d3canvas", nodeClick, showProductDetails);
 function nodeClick(sku) {
     accessoriesForProduct(sku, function(data) {
         var products = data.products;
-        if (products.length === 0) {
-            alert("No accessories for this product");
-            return;
-        }
         var skus = [];
         for (var idx=0; idx<products.length; idx++) {
             var product = products[idx];
@@ -21,18 +17,24 @@ function nodeClick(sku) {
             }
             //skus.push(product.sku);
         }
+        if (skus.length === 0) {
+            //alert("No accessories for this product");
+            return;
+        }
 
-        detailsForProducts(skus, function(data) {
-            var products = data.products;
-            for (var idx=0; idx<products.length; idx++) {
-                var product = products[idx];
-                var accessorySKU = product.sku;
-                var imageUrl = product.image;
-                var radius = 50;
-                D3.addnode(accessorySKU, radius, imageUrl);
-                D3.linknodes(sku, accessorySKU, "accessory");
-            }
-        });
+        if (skus.length > 0) {
+            detailsForProducts(skus, function(data) {
+                var products = data.products;
+                for (var idx=0; idx<products.length; idx++) {
+                    var product = products[idx];
+                    var accessorySKU = product.sku;
+                    var imageUrl = product.image;
+                    var radius = 50;
+                    D3.addnode(accessorySKU, radius, imageUrl);
+                    D3.linknodes(sku, accessorySKU, "accessory");
+                }
+            });
+        }
 
     });
 
