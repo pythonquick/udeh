@@ -36,6 +36,7 @@ function handleTrendingProducts(data) {
             D3.addnode(sku, radius, imageUrl);
         }
     });
+    displayProductDetails(skus[0]);
 }
 
 
@@ -99,6 +100,18 @@ function searchForProduct(){
     var searchString = $("#searchField").val();
     //handleSearchResults(sku);
     searchFor(searchString, handleSearchResults);
+}
 
+
+function displayProductDetails(sku) {
+    detailsForProduct(sku, function(data) {
+        var product = data.products[0];
+        var name = product.name;
+        var image = product.image;
+        var shortDescription = product.shortDescription || "(none)";
+        log("- name: " + name);
+        log("- image: " + image);
+        log("- descr: " + shortDescription);
+    });
 }
 
