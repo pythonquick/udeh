@@ -1,11 +1,47 @@
 var D3;
 
 $(function() {
-D3 = initD3("#d3canvas", nodeClick);
+D3 = initD3("#d3canvas", nodeClick, showProductDetails);
 });
 
-function nodeClick() {
-    alert("node click");
+function nodeClick(sku) {
+    accessoriesForProduct(sku, function(data) {
+        var products = data.products;
+        if (products.length === 0) {
+            alert("No accessories for this product");
+            return;
+        }
+        var skus = [];
+        for (var idx=0; idx<products.length; idx++) {
+            var product = products[idx];
+            var accessories = product.accessories;
+            for (var accIdx=0; accIdx<accessories.length; accIdx++) {
+                var accessory = accessories[accIdx];
+                skus.push(accessory.sku);
+            }
+            //skus.push(product.sku);
+        }
+
+        detailsForProducts(skus, function(data) {
+            var products = data.products;
+            for (var idx=0; idx<products.length; idx++) {
+                var product = products[idx];
+                var accessorySKU = product.sku;
+                var imageUrl = product.image;
+                var radius = 50;
+                D3.addnode(accessorySKU, radius, imageUrl);
+                D3.linknodes(sku, accessorySKU, "accessory");
+            }
+        });
+
+    });
+
+}
+
+
+function showProductDetails(sku) {
+    log("showProductDetails");
+    //log
 }
 
 
@@ -39,6 +75,7 @@ function handleTrendingProducts(data) {
             D3.addnode(sku, radius, imageUrl);
         }
     });
+    displayProductDetails(skus[0]);
 }
 
 function onModalClick(sku){
@@ -121,6 +158,18 @@ function searchForProduct(){
     var searchString = $("#searchField").val();
     //handleSearchResults(sku);
     searchFor(searchString, handleSearchResults);
+}
 
+
+function displayProductDetails(sku) {
+    detailsForProduct(sku, function(data) {
+        var product = data.products[0];
+        var name = product.name;
+        var image = product.image;
+        var shortDescription = product.shortDescription || "(none)";
+        log("- name: " + name);
+        log("- image: " + image);
+        log("- descr: " + shortDescription);
+    });
 }
 

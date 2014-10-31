@@ -4,7 +4,7 @@
 //   addnode(sku, radius, imageurl)
 //   addlink(sku1, sku2, linkType) // linkType is just a class to use
 //   clear() // reset the entire graph
-function initD3(selector, onclick) {
+function initD3(selector, onclick, dblclick) {
 	var j = $(selector),
 		width = j.width(),
 		height = j.height();
@@ -16,7 +16,7 @@ function initD3(selector, onclick) {
 		.charge(-750)
 		.on("tick", tick);
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select(selector).append("svg")
 		.attr("width", width)
 		.attr("height", height);
 
@@ -138,7 +138,8 @@ function initD3(selector, onclick) {
 		  .on("click", function(d) {
 			if (d3.event.defaultPrevented) return; // ignore drag
 			onclick(d.sku);
-		  });
+		  })
+		  .on("dblclick", function(d){dblclick(d.sku);});
 
 	  force.start();
 	}
