@@ -1,157 +1,21 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<style>
-
-rect {
-  fill: none;
-  pointer-events: all;
-}
-
-.node {
-  fill: #FFF;
-  stroke: #000;
-  stroke-width: 2px;
-}
-
-.cursor {
-  fill: none;
-  stroke: brown;
-  pointer-events: none;
-}
-
-.link {
-  stroke: #999;
-}
-
-// link type colors
-.accessory { stroke: #F00;}
-.purchesedWith { stroke: #0F0; }
-.alsoViewed { stroke: #00F; }
-
-</style>
+<link rel="stylesheet" type="text/css" href="css/d3_wrapper.css">
 <body>
 <script src="js/jquery.js"></script>
 <script src="js/d3.v3.min.js"></script>
+<script src="js/d3_wrapper.js"></script>
 <script>
-
-
-var width = window.screen.width,
-	height = window.screen.height;
-
-var fill = d3.scale.category20();
-var force = d3.layout.force()
-	.size([width, height])
-	.linkDistance(200)
-	.charge(-750)
-	.on("tick", tick);
-
-var svg = d3.select("body").append("svg")
-	.attr("width", width)
-	.attr("height", height);
-
-svg.append("rect")
-	.attr("width", width)
-	.attr("height", height);
-
-var defs = svg.append('svg:defs');
-
-var nodes = force.nodes(),
-	links = force.links(),
-	node = svg.selectAll(".node"),
-	link = svg.selectAll(".link");
-
-restart();
-
-function addnode(sku, radius, image) {
-	// only build filter once
-	if ($("#filter-"+sku).length === 0) {
-		var filter = svg.append('svg:filter')
-			.attr('id', 'filter-'+sku)
-			.attr('primitiveUnits', "objectBoundingBox")
-			.attr('width', "100%")
-			.attr('height', "100%")
-			.attr('x', "0%")
-			.attr('y', "0%");
-		
-		filter.append('svg:feImage')
-			.attr("result", "raster")
-			.attr('xlink:href', image)
-			.attr('width', "50%")
-			.attr('height', "50%")
-			.attr('x', "25%")
-			.attr('y', "25%");
-			
-		filter.append('svg:feBlend')
-			.attr("in2", "SourceGraphic")
-			.attr("in", "raster")
-			.attr("mode", "normal");
-	}
-	
-	var node = {x: width/2, y: height/2, sku: sku, radius: radius, image:image};
-		n = nodes.push(node);
-
-	restart();
-
-	return node;
-}
-
-function getNodeBySKU(sku) {
-	var res = null;
-	nodes.forEach(function(target) {
-		if (target.sku == sku) {
-			res = target;
-		}
-	});
-	return res;
-}
-
-function linknodes(sku1, sku2, linkType) {
-	var node1 = getNodeBySKU(sku1), node2 = getNodeBySKU(sku2);
-	if (node1 === null || node2 === null) { return; }
-	links.push({source: node1, target: node2, linkType: linkType});
-
-	restart();
-}
-
-// Generic d3 tick function
-function tick() {
-  link.attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; });
-
-  node.attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; });
-}
-
-function restart() {
-  link = link.data(links);
-
-  link.enter().insert("line", ".node")
-      .attr("class", function(d) { return "link " + d.linkType; });
-
-  node = node.data(nodes);
-
-  node.enter().insert("circle", ".cursor")
-      .attr("class", "node")
-      .attr("r", function (d) { return d.radius; })
-	  .attr('filter', function(d) { return "url(#filter-"+d.sku+")"; })
-      .call(force.drag)
-		.on("click", function(d) {
-		if (d3.event.defaultPrevented) return; // ignore drag
-		alert("otherwiseDoAwesomeThing();");
-		});
-  force.start();
-}
-
+d3obj = initD3("body", function(sku) {alert(sku); });
 </script>
-SKU 1:<input id="sku1" type="text"/><input onclick="addnode($('#sku1').val(), 50, 'http://img.bbystatic.com/BestBuy_US/images/products/2878/2878503_sc.jpg');" type="button" value="Add Node"/><br/>
-SKU 2:<input id="sku2" type="text"/><input onclick="addnode($('#sku2').val(), 50, 'http://img.bbystatic.com/BestBuy_US/images/products/2878/2878503_sc.jpg');" type="button" value="Add Node"/><br/>
+SKU 1:<input id="sku1" type="text"/><input onclick="d3obj.addnode($('#sku1').val(), 50, 'http://img.bbystatic.com/BestBuy_US/images/products/2878/2878503_sc.jpg');" type="button" value="Add Node"/><br/>
+SKU 2:<input id="sku2" type="text"/><input onclick="d3obj.addnode($('#sku2').val(), 50, 'http://img.bbystatic.com/BestBuy_US/images/products/2878/2878503_sc.jpg');" type="button" value="Add Node"/><br/>
 <select id="linkType">
 <option default>accessory</option>
 <option>purchesedWith</option>
 <option>alsoViewed</option>
 </select>
-<input onclick="linknodes($('#sku1').val(), $('#sku2').val(), $('#linkType').val());" type="button" value="Link Nodes"/>
+<input onclick="d3obj.linknodes($('#sku1').val(), $('#sku2').val(), $('#linkType').val());" type="button" value="Link Nodes"/><br/>
+<input onclick="d3obj.clear();" type="button" value="Clear"/>
 </body>
 </html>
