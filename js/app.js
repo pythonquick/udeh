@@ -6,8 +6,6 @@ D3 = initD3("#d3canvas", nodeClick, showProductDetails);
 
 function nodeClick(sku) {
     accessoriesForProduct(sku, function(data) {
-        log("data for accessories:");
-        log(data);
         var products = data.products;
         if (products.length === 0) {
             alert("No accessories for this product");
@@ -16,20 +14,22 @@ function nodeClick(sku) {
         var skus = [];
         for (var idx=0; idx<products.length; idx++) {
             var product = products[idx];
-            skus.push(product.sku);
+            var accessories = product.accessories;
+            for (var accIdx=0; accIdx<accessories.length; accIdx++) {
+                var accessory = accessories[accIdx];
+                skus.push(accessory.sku);
+            }
+            //skus.push(product.sku);
         }
 
         detailsForProducts(skus, function(data) {
-            log("product accessories details:");
-            log(data);
             var products = data.products;
             for (var idx=0; idx<products.length; idx++) {
                 var product = products[idx];
                 var accessorySKU = product.sku;
                 var imageUrl = product.image;
                 var radius = 50;
-                log("accessorySKU: " + accessorySKU + " image: " + imageUrl);
-                //D3.addnode(sku, radius, imageUrl);
+                D3.addnode(accessorySKU, radius, imageUrl);
                 D3.linknodes(sku, accessorySKU, "accessory");
             }
         });
@@ -39,9 +39,9 @@ function nodeClick(sku) {
 }
 
 
-function showProductDetails() {
+function showProductDetails(sku) {
     log("showProductDetails");
-    log
+    //log
 }
 
 
