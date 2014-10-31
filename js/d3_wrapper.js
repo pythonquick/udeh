@@ -6,8 +6,8 @@
 //   clear() // reset the entire graph
 function initD3(selector, onclick) {
 	var j = $(selector),
-		width = window.screen.width,
-		height = window.screen.height;
+		width = j.width(),
+		height = j.height();
 
 	var fill = d3.scale.category20();
 	var force = d3.layout.force()
@@ -26,6 +26,33 @@ function initD3(selector, onclick) {
 
 	var defs = svg.append('svg:defs');
 
+/*
+<filter id="dropshadow" height="130%">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="3"/> <!-- stdDeviation is how much to blur -->
+  <feOffset dx="2" dy="2" result="offsetblur"/> <!-- how much to offset -->
+  <feMerge> 
+    <feMergeNode/> <!-- this contains the offset blurred image -->
+    <feMergeNode in="SourceGraphic"/> <!-- this contains the element that the filter is applied to -->
+  </feMerge>
+</filter>
+*/
+
+	var dropshadow = svg.append("filter")
+		.attr("id", "dropshadow")
+		.attr("height", "130%");
+	
+	dropshadow.append("feGaussianBlur")
+		.attr("in", "SourceAlpha")
+		.attr("stdDeviation", "3");
+	dropshadow.append("feOffset")
+		.attr("dx", 2)
+		.attr("dy", 3)
+		.attr("result", "offsetblur");
+	var merge = dropshadow.append("feMerge");
+	
+	merge.append("feMergeNode");
+	merge.append("feMergeNode").attr("in", "SourceGraphic");
+
 	var nodes = force.nodes(),
 		links = force.links(),
 		node = svg.selectAll(".node"),
@@ -39,10 +66,10 @@ function initD3(selector, onclick) {
 			var filter = svg.append('svg:filter')
 				.attr('id', 'filter-'+sku)
 				.attr('primitiveUnits', "objectBoundingBox")
-				.attr('width', "100%")
-				.attr('height', "100%")
-				.attr('x', "0%")
-				.attr('y', "0%");
+				.attr('width', "102%")
+				.attr('height', "102%")
+				.attr('x', "-1%")
+				.attr('y', "-1%");
 			
 			filter.append('svg:feImage')
 				.attr("result", "raster")
