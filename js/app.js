@@ -4,8 +4,37 @@ $(function() {
 D3 = initD3("#d3canvas", nodeClick);
 });
 
-function nodeClick() {
-    alert("node click");
+function nodeClick(sku) {
+    accessoriesForProduct(sku, function(data) {
+        log("data for accessories:");
+        log(data);
+        var products = data.products;
+        if (products.length === 0) {
+            alert("No accessories for this product");
+            return;
+        }
+        var skus = [];
+        for (var idx=0; idx<products.length; idx++) {
+            var product = products[idx];
+            skus.push(product.sku);
+        }
+
+        detailsForProducts(skus, function(data) {
+            log("product details:");
+            log(data);
+            var products = data.products;
+            for (var idx=0; idx<products.length; idx++) {
+                var product = products[idx];
+                var sku = product.sku;
+                var imageUrl = product.image;
+                var radius = 50;
+                log("sku: " + sku + " image: " + imageUrl);
+                D3.addnode(sku, radius, imageUrl);
+            }
+        });
+
+    });
+
 }
 
 

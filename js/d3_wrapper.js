@@ -16,7 +16,7 @@ function initD3(selector, onclick) {
 		.charge(-750)
 		.on("tick", tick);
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select(selector).append("svg")
 		.attr("width", width)
 		.attr("height", height);
 
