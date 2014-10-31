@@ -1,5 +1,8 @@
-var D3 = initD3("#d3canvas", nodeClick);
+var D3;
 
+$(function() {
+D3 = initD3("#d3canvas", nodeClick);
+});
 
 function nodeClick() {
     alert("node click");
