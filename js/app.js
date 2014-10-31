@@ -1,7 +1,7 @@
 var D3;
 
 $(function() {
-D3 = initD3("#d3canvas", nodeClick);
+D3 = initD3("#d3canvas", nodeClick, showProductDetails);
 });
 
 function nodeClick(sku) {
@@ -20,21 +20,28 @@ function nodeClick(sku) {
         }
 
         detailsForProducts(skus, function(data) {
-            log("product details:");
+            log("product accessories details:");
             log(data);
             var products = data.products;
             for (var idx=0; idx<products.length; idx++) {
                 var product = products[idx];
-                var sku = product.sku;
+                var accessorySKU = product.sku;
                 var imageUrl = product.image;
                 var radius = 50;
-                log("sku: " + sku + " image: " + imageUrl);
-                D3.addnode(sku, radius, imageUrl);
+                log("accessorySKU: " + accessorySKU + " image: " + imageUrl);
+                //D3.addnode(sku, radius, imageUrl);
+                D3.linknodes(sku, accessorySKU, "accessory");
             }
         });
 
     });
 
+}
+
+
+function showProductDetails() {
+    log("showProductDetails");
+    log
 }
 
 
