@@ -26,7 +26,7 @@
 
         var baseUrl = "http://api.remix.bestbuy.com/v1/products(sku=" + sku + ")";
         var params = {
-            show: "name,description,shortDescription,longDescription,height,width,depth,weight"
+            show: "name,description,shortDescription,longDescription,height,width,depth,weight,image"
         };
         bestBuyApi(baseUrl, params, callback);
     }
@@ -36,7 +36,7 @@
         //http://api.remix.bestbuy.com/v1/products(description=camera*)?show=name,description,shortDescription,longDescription,height,width,depth,weight&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
         var baseUrl = "http://api.remix.bestbuy.com/v1/products(description=" + searchString + "*)";
         var params = {
-            show: "name,description,shortDescription,longDescription,height,width,depth,weight"
+            show: "name,description,shortDescription,longDescription,height,width,depth,weight,sku"
         };
         bestBuyApi(baseUrl, params, callback);
     }
@@ -51,6 +51,15 @@
         };
         bestBuyApi(baseUrl, params, callback);
 
+    }
+
+
+    function reviewsForProduct(sku, callback) {
+        //http://api.remix.bestbuy.com/v1/reviews(sku=1780275)?format=json&apiKey=YourAPIKey&show=id,sku
+        var baseUrl = "http://api.remix.bestbuy.com/v1/reviews(sku=" + sku + ")";
+        var params = {
+        };
+        bestBuyApi(baseUrl, params, callback);
     }
 
 
