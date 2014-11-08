@@ -43,7 +43,7 @@
 
     function searchFor(searchString, callback) {
         //http://api.remix.bestbuy.com/v1/products(description=camera*)?show=name,description,shortDescription,longDescription,height,width,depth,weight&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
-        var baseUrl = "http://api.remix.bestbuy.com/v1/products(description=" + searchString + "*)";
+        var baseUrl = "http://api.remix.bestbuy.com/v1/products(name=" + searchString + "*)";
         var params = {
             show: "name,description,shortDescription,longDescription,height,width,depth,weight,sku"
         };

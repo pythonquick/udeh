@@ -118,17 +118,30 @@ function handleProductDetails(data) {
 
 
 function handleSearchResults(data) {
-    log("Search Results");
-    log(data);
     var results = data.products;
+    log(results)
+    var skus = [];
     for (var idx=0; idx<results.length; idx++) {
         var product = results[idx];
-        log("Search Result:");
-        log("- Name: " + product.name);
-        log("- Description: " + product.description);
-        log("- SKU: " + product.sku);
+        skus.push(product.sku);
+        log(product.sku);
     }
+    detailsForProducts(skus, function(data) {
+        log("product details:");
+        log(data);
+        var products = data.products;
+        for (var idx=0; idx<products.length; idx++) {
+            var product = products[idx];
+            var sku = product.sku;
+            var imageUrl = product.image;
+            var radius = 50;
+            log("sku: " + sku + " image: " + imageUrl);
+            D3.addnode(sku, radius, imageUrl);
+        }
+    });
+    displayProductDetails(skus[0]);
 }
+
 
 
 function handleReviews(data) {
@@ -154,7 +167,8 @@ function logApiResponse(data) {
 
 function searchForProduct(){
     var searchString = $("#searchField").val();
-    //handleSearchResults(sku);
+    log("SEARCH RESULTS");
+    log(searchString);
     searchFor(searchString, handleSearchResults);
 }
 
