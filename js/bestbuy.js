@@ -1,13 +1,13 @@
 //var BestBuy = (function($) {
     var BESTBUY_API_KEY = "afv2m5jc77t2xur52fbf94kk";
     var BESTBUY_API_URL = "http://api.remix.bestbuy.com/v1/stores(region=ut)";
-    
+
 
     function bestBuyApi(url, params, doneFunction) {
         params.apiKey = BESTBUY_API_KEY;
         params.format="json";
         $.get(url, params, function() {
-            
+
         })
         .done(doneFunction);
     }
@@ -43,7 +43,7 @@
 
     function searchFor(searchString, callback) {
         //http://api.remix.bestbuy.com/v1/products(description=camera*)?show=name,description,shortDescription,longDescription,height,width,depth,weight&format=json&apiKey=afv2m5jc77t2xur52fbf94kk
-        var baseUrl = "http://api.remix.bestbuy.com/v1/products(name=" + searchString + "*)";
+        var baseUrl = "http://api.remix.bestbuy.com/v1/products(longDescription=" + searchString + "*)";
         var params = {
             show: "name,description,shortDescription,longDescription,height,width,depth,weight,sku"
         };

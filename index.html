@@ -10,8 +10,10 @@
         <script src="js/app.js"></script>
 
         <script>
-
+            jQuery.support.cors = true;
+            $.support.cors = true;
             $(function() {
+
                 loadTrendingProducts();
                 //accessoriesForProduct("6848136", handleAccessories);
                 //detailsForProduct("6848136", logApiResponse);
@@ -20,6 +22,12 @@
 
                 // Hook up some events:
                 $("#searchButton").click(searchForProduct);
+                $('#searchField').keypress(function (e) {
+                  if (e.which == 13) {
+                      searchForProduct();
+                      return false;
+                    }
+                  });
 
             });
         </script>
@@ -31,7 +39,7 @@
   		</div>
   		<button type="button" class="btn btn-default" id="searchButton">Submit</button>
 	</form>
-	
+
 
 
 
