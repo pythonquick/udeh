@@ -7,7 +7,7 @@
         params.apiKey = BESTBUY_API_KEY;
         params.format="json";
         $.get(url, params, function() {
-
+          
         })
         .done(doneFunction);
     }
