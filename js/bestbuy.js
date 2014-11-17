@@ -4,12 +4,29 @@
 
 
     function bestBuyApi(url, params, doneFunction) {
+        /*
         params.apiKey = BESTBUY_API_KEY;
         params.format="json";
         $.get(url, params, function() {
-          
+
         })
         .done(doneFunction);
+          */
+        $.ajax({
+          type: "GET",
+          url: url,
+          crossDomain: true,
+          data: {
+            apiKey: BESTBUY_API_KEY,
+            format: "json"
+          },
+          dataType: "json",
+          success: function() {
+            log("success");
+          }
+        })
+        .done(doneFunction);
+
     }
 
 
